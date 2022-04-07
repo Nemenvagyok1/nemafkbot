@@ -1,8 +1,8 @@
-function init(){
 const mineflayer = require('mineflayer')
 const cmd = require('mineflayer-cmd').plugin
 const fs = require('fs');
-let data = process.env
+let rawdata = fs.readFileSync('config.json');
+let data = JSON.parse(rawdata);
 var lasttime = -1;
 var moving = 0;
 var connected = 0;
@@ -11,10 +11,10 @@ var lastaction;
 var pi = 3.14159;
 var moveinterval = 2; // 2 second movement interval
 var maxrandom = 5; // 0-5 seconds added to movement interval (randomly)
-var host = data.ip
+var host = ${data.ip}
 var port=data.port
-var username = data.name
-var nightskip = data.auto-night-skip
+var username = data["name"]
+var nightskip = data["auto-night-skip"]
 var bot = mineflayer.createBot({
   host,
   username,
@@ -26,6 +26,8 @@ function getRandomArbitrary(min, max) {
 }
 
 bot.loadPlugin(cmd)
+
+
 
 bot.on('login', async function(){
     console.log("Logged In")
@@ -52,8 +54,8 @@ bot.on('time', function(time) {
                 moving = 0;
                 lasttime = bot.time.age;
             } else {
-                var yaw = Math.random()* pi - (0.5pi);
-                var pitch = Math.random()* pi - (0.5*pi);
+                var yaw = Math.random()pi - (0.5pi);
+                var pitch = Math.random()pi - (0.5*pi);
                 bot.look(yaw,pitch,false);
                 lastaction = actions[Math.floor(Math.random() * actions.length)];
                 bot.setControlState(lastaction,true);
@@ -72,6 +74,3 @@ bot.on('spawn',function() {
 bot.on('death',function() {
     bot.emit("respawn")
 })
-
-bot.on("end", init)
-}
