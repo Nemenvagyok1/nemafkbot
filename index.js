@@ -11,7 +11,7 @@ var lastaction;
 var pi = 3.14159;
 var moveinterval = 2; // 2 second movement interval
 var maxrandom = 5; // 0-5 seconds added to movement interval (randomly)
-var host=data.ip
+var host = `${data.ip}`
 var port=data.port
 var username = data["name"]
 var nightskip = data["auto-night-skip"]
@@ -30,16 +30,16 @@ bot.loadPlugin(cmd)
 
 
 bot.on('login', async function(){
-    console.log("Logged In")
+	console.log("Logged In")
     bot.chat("/login asd12345")
-    bot.chat("Nem AFK-olni jöttem");
+	bot.chat("Nem AFK-olni jöttem");
 });
 
 bot.on('time', function(time) {
-    if(nightskip == "true"){
-    if(bot.time.timeOfDay >= 13000){
-    bot.chat('/time set day')
-    }}
+	if(nightskip == "true"){
+	if(bot.time.timeOfDay >= 13000){
+	bot.chat('/time set day')
+	}}
     if (connected <1) {
         return;
     }
@@ -47,15 +47,15 @@ bot.on('time', function(time) {
         lasttime = bot.time.age;
     } else {
         var randomadd = Math.random() * maxrandom * 20;
-        var interval = moveinterval20 + randomadd;
+        var interval = moveinterval*20 + randomadd;
         if (bot.time.age - lasttime > interval) {
             if (moving == 1) {
                 bot.setControlState(lastaction,false);
                 moving = 0;
                 lasttime = bot.time.age;
             } else {
-                var yaw = Math.random()pi - (0.5pi);
-                var pitch = Math.random()pi - (0.5*pi);
+                var yaw = Math.random()*pi - (0.5*pi);
+                var pitch = Math.random()*pi - (0.5*pi);
                 bot.look(yaw,pitch,false);
                 lastaction = actions[Math.floor(Math.random() * actions.length)];
                 bot.setControlState(lastaction,true);
