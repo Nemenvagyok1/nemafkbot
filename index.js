@@ -31,7 +31,7 @@ bot.loadPlugin(cmd)
 
 bot.on('login', async function(){
 	console.log("Logged In")
-    bot.chat("/register asd12345 asd12345")
+    bot.chat("/login asd12345")
 	bot.chat("Nem AFK-olni jöttem");
 });
 
